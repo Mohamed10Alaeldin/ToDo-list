@@ -50,7 +50,7 @@ for item in task_list:
 sb = tk.Scrollbar(frame)
 sb.pack(side=tk.RIGHT, fill=tk.BOTH)
 lb.config(yscrollcommand=sb.set)
-sb.config(command=lb.xview)
+sb.config(command=lb.yview)
 
 my_entry = tk.Entry(
     window,
