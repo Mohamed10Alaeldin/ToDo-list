@@ -8,7 +8,7 @@ window.title('First GUI-bases program')
 # config use for background color
 window.config(bg='#223441')
 # resizing is off
-window.resizable(width=False, height=False)
+window.resizable(0,0)
 # frame to hold the widgets
 frame = tk.Frame(window)
 # extra padding around frame from outside
