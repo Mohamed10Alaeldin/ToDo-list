@@ -80,6 +80,9 @@ def deleteTask():
     else:
         messagebox.showwarning("warning", "Please select some task.")
 
+def Enter_key_pressed(event):
+    newTask()
+
 delTask_btn = tk.Button(
     button_frame,
     text='Delete Task',
@@ -90,4 +93,5 @@ delTask_btn = tk.Button(
     command= deleteTask
 )
 delTask_btn.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+window.bind("<Return>",Enter_key_pressed)
 window.mainloop()
