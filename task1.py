@@ -9,6 +9,33 @@ window.title('First GUI-bases program')
 window.config(bg='#223441')
 # resizing is off
 window.resizable(0,0)
+# --------- functions ------------ #
+def newTask():
+    task = my_entry.get()
+    if task != "":
+        lb.insert(tk.END, task)
+        my_entry.delete(0, "end")
+    else:
+        messagebox.showwarning("warning", "Please enter some task.")
+
+def deleteTask():
+    if tk.ANCHOR:
+        lb.delete(tk.ANCHOR)
+    else:
+        messagebox.showwarning("warning", "Please select some task.")
+def updateTask():
+    task = my_entry.get()
+    if tk.ANCHOR and task != "":
+        deleteTask()
+        lb.insert(tk.ANCHOR, task)
+        my_entry.delete(0, "end")
+    else:
+        messagebox.showwarning("warning", "Please select some task.")
+
+        
+def Enter_key_pressed(event):
+    updateTask()
+
 # frame to hold the widgets
 frame = tk.Frame(window)
 # extra padding around frame from outside
@@ -22,26 +49,10 @@ lb = tk.Listbox(
     fg='#464646', # text color
     highlightthickness=0,
     selectbackground='#a6a6a6', # color of the focused item in the Listbox.
-    activestyle="none",
-    
+    activestyle="none",  
 )
+
 lb.pack(side=tk.LEFT, fill=tk.BOTH)
-# task_list = ['Eat apple',
-#     'drink water',
-#     'go gym',
-#     'write software',
-#     'write documentation about project',
-#     'take a nap',
-#     'Learn something',
-#     'paint canvas',
-#     'listen to recitition',
-#     "read for exams",
-#     "revise math rulus"
-#     ]
-
-
-# for item in task_list:
-#     lb.insert(tk.END, item) # end means add the item to (end of the list)
 sb = tk.Scrollbar(frame)
 sb.pack(side=tk.RIGHT, fill=tk.BOTH)
 lb.config(yscrollcommand=sb.set)
@@ -55,14 +66,6 @@ my_entry.pack(pady=20)
 button_frame = tk.Frame(window)
 button_frame.pack(pady=20)
 
-def newTask():
-    task = my_entry.get()
-    if task != "":
-        lb.insert(tk.END, task)
-        my_entry.delete(0, "end")
-    else:
-        messagebox.showwarning("warning", "Please enter some task.")
-
 addTask_btn = tk.Button(
     button_frame,
     text='Add Task',
@@ -74,15 +77,6 @@ addTask_btn = tk.Button(
 )
 addTask_btn.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
 
-def deleteTask():
-    if tk.ANCHOR:
-        lb.delete(tk.ANCHOR)
-    else:
-        messagebox.showwarning("warning", "Please select some task.")
-
-def Enter_key_pressed(event):
-    newTask()
-
 delTask_btn = tk.Button(
     button_frame,
     text='Delete Task',
@@ -93,5 +87,37 @@ delTask_btn = tk.Button(
     command= deleteTask
 )
 delTask_btn.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+
+updTask_btn = tk.Button(
+    button_frame,
+    text='Update Task',
+    font=('times 14'),
+    bg='orange',
+    padx=20,
+    pady=20,
+    command= updateTask
+)
+updTask_btn.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+
+file1 = open("Database.txt", "r")
+while True:
+    task = file1.readline()
+    if not task:break
+    lb.insert(tk.END,task)
+file1.close()
+
+def callback():
+    f = open("Database.txt","w")
+    tasks = list(lb.get(0,tk.END))
+    for task in tasks:
+        task = task.strip()
+        f.write(task)
+        f.write("\n")
+        
+    f.close()
+    window.destroy()
+
 window.bind("<Return>",Enter_key_pressed)
+window.protocol("WM_DELETE_WINDOW", callback)
 window.mainloop()
+
