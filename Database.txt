@@ -1,6 +1,3 @@
-GO GYM
-READ BOOKS
-DO PUSH UPS
-SOLVE MATH
-WRITE YOUR HOMEWORKS
-GO TO BED EARLY
+shopping
+read the documntation
+complete codesoft tasks

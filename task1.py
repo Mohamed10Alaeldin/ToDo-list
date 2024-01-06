@@ -35,6 +35,8 @@ def updateTask():
         
 def Enter_key_pressed(event):
     updateTask()
+def Delete_key_pressed(event):
+    deleteTask()
 
 # frame to hold the widgets
 frame = tk.Frame(window)
@@ -118,6 +120,7 @@ def callback():
     window.destroy()
 
 window.bind("<Return>",Enter_key_pressed)
+window.bind("<Delete>",Delete_key_pressed)
 window.protocol("WM_DELETE_WINDOW", callback)
 window.mainloop()
 
